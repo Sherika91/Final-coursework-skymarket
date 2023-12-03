@@ -1,4 +1,5 @@
-from rest_framework import viewsets, pagination
+from requests import Response
+from rest_framework import viewsets, pagination, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from ads.models import Comment
@@ -11,6 +12,7 @@ class CommentPaginator(pagination.PageNumberPagination):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'post', 'delete', 'patch']
     pagination_class = CommentPaginator
     queryset = Comment.objects.all().order_by('-created_at')
     default_permission = [AllowAny, ]
