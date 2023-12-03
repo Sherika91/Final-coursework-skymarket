@@ -7,7 +7,6 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework_simplejwt import views
 
-
 import ads.urls.ads
 
 # TODO здесь необходимо подклюючит нужные нам urls к проекту
@@ -31,7 +30,7 @@ urlpatterns = [
     path("api/", include("users.urls")),
 
     # Ads urls
-    path('api/ads/', include(ads.urls.ads.router.urls)),
+    path('api/ads/', include('ads.urls.ads')),
     path('api/comments/', include('ads.urls.comments')),
 
     # Swagger and Redoc urls

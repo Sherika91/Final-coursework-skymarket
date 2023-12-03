@@ -1,5 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, pagination
+from rest_framework import viewsets, pagination, generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import action
 
@@ -19,6 +19,7 @@ class AdPaginator(pagination.PageNumberPagination):
 
 
 class AdViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'post', 'delete', 'patch']
     pagination_class = AdPaginator
     queryset = Ad.objects.all()
     default_permission = [AllowAny, ]
@@ -58,3 +59,14 @@ class AdViewSet(viewsets.ModelViewSet):
     #     page = paginator.paginate_queryset(ads, request)
     #
     #     return paginator.get_paginated_response(AdListSerializer(page, many=True).data)
+
+
+class UserAdsAPIView(generics.ListAPIView):
+    serializer_class = AdListSerializer
+    permission_classes = [IsOwnerOrAdmin,]
+    pagination_class = AdPaginator
+
+    def get_queryset(self):
+        user = self.request.user
+        return Ad.objects.filter(author_id=user.id)
+
