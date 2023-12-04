@@ -51,15 +51,6 @@ class AdViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    # @extend_schema(summary='My Ads', responses=AdListSerializer)
-    # @action(detail=False, methods=['get'], permission_classes=[IsOwnerOrAdmin], url_path='me')
-    # def my_ads(self, request):
-    #     ads = Ad.objects.filter(author_id=self.request.user.id)
-    #     paginator = AdPaginator()
-    #     page = paginator.paginate_queryset(ads, request)
-    #
-    #     return paginator.get_paginated_response(AdListSerializer(page, many=True).data)
-
 
 class UserAdsAPIView(generics.ListAPIView):
     serializer_class = AdListSerializer

@@ -28,8 +28,8 @@ urlpatterns = [
     path("api/", include("users.urls")),
 
     # Ads urls
-    path('api/ads/', include(ads.urls.ads.router.urls)),
-    path('api/comments/', include('ads.urls.comments')),
+    path('api/ads/', include(('ads.urls.ads', 'ads'), namespace='ads')),
+    path('api/comments/', include(('ads.urls.comments', 'comments'), namespace='comments')),
 
     # Swagger and Redoc urls
     path('api/schema/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
