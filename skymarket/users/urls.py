@@ -12,8 +12,4 @@ users_router.register("users", UserViewSet, basename="users")
 urlpatterns = [
     path("", include(users_router.urls)),
 
-    # Djoser urls
-    re_path(r'^auth/', include('djoser.urls')),
-    re_path(r'^auth/', include('djoser.urls.jwt')),
-
 ]
