@@ -73,6 +73,6 @@ class User(AbstractUser):
         self.is_admin = value
 
     class Meta:
-        ordering = ()
+        ordering = ('-id',)
         verbose_name = 'User'
         verbose_name_plural = 'Users'
