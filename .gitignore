@@ -129,5 +129,3 @@ dmypy.json
 .pyre/
 .DS_Store
 .idea/
-./django_static
-.env.example
