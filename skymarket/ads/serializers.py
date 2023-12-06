@@ -1,7 +1,11 @@
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.phonenumber import to_python
 from requests import Response
 from rest_framework import serializers, status
+from rest_framework.exceptions import ValidationError
 
 from ads.models import Ad, Comment
+from users.serializers import PhoneNumberFieldSerializer
 
 
 # Comment Serializer
@@ -46,7 +50,7 @@ class AdCreateSerializer(serializers.ModelSerializer):
 
 
 class AdDetailSerializer(serializers.ModelSerializer):
-    phone = serializers.ReadOnlyField(source='author.phone')
+    phone = PhoneNumberFieldSerializer(source='author.phone', read_only=True)
     author = serializers.ReadOnlyField(source='author.email')
     author_first_name = serializers.ReadOnlyField(source='author.first_name')
     author_last_name = serializers.ReadOnlyField(source='author.last_name')

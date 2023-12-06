@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     'django_filters',
     'django_extensions',
+    'rest_framework.authtoken',
 
     # Djoser
     "djoser",
