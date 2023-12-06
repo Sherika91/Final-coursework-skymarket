@@ -1,7 +1,6 @@
 from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from django.urls import reverse
-from ads.models import Ad
 from users.models import User
 
 
@@ -71,7 +70,7 @@ class UserViewSetTestCase(APITestCase):
                                'last_name': 'stuff',
                                'phone': '+998909090909',
                                'role': 'admin',
-                               'id': 2,
+                               'id': self.staff_user.pk,
                                'email': 'stuff@test@gmail.com'},
 
                               {'first_name': 'Test',
@@ -94,12 +93,24 @@ class UserViewSetTestCase(APITestCase):
                  'last_name': 'User',
                  'phone': '+19430292',
                  'role': 'user',
-                 'id': 3,
+                 'id': self.user.pk,
                  'email': 'TestUser@test.com'}]})
 
-    def test_user_delete(self):
-        response = self.client.delete(reverse('users:users-detail', args=(self.user.pk,)), data={
+    def test_user_detail(self):
+        response = self.client.get(reverse('users:users-detail', args=(self.user.pk,)))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), {
+            'first_name': 'Test',
+            'last_name': 'User',
+            'phone': '+19430292',
+            'role': 'user',
+            'id': self.user.pk,
+            'email': 'TestUser@test.com'}
+                         )
+
+    def test_user_deletion(self):
+        response = self.client.delete('/api/users/{}/'.format(self.user.id), data={
             'current_password': 'TestPassword'
         })
-        print(response.json())
-        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.status_code, 204)
+        self.assertFalse(User.objects.filter(id=self.user.id).exists())
