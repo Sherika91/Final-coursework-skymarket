@@ -14,6 +14,7 @@ class CommentSerializer(serializers.ModelSerializer):
     author_first_name = serializers.ReadOnlyField(source='author.first_name')
     author_last_name = serializers.ReadOnlyField(source='author.last_name')
     ad = serializers.ReadOnlyField(source='ad.title')
+    ad_id = serializers.ReadOnlyField(source='ad.pk')
 
     class Meta:
         model = Comment
@@ -30,6 +31,7 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 class CommentRetrieveSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.email')
     ad = serializers.ReadOnlyField(source='ad.title')
+    ad_id = serializers.ReadOnlyField(source='ad.pk')
 
     class Meta:
         model = Comment
@@ -55,11 +57,12 @@ class AdDetailSerializer(serializers.ModelSerializer):
     author_first_name = serializers.ReadOnlyField(source='author.first_name')
     author_last_name = serializers.ReadOnlyField(source='author.last_name')
     author_id = serializers.ReadOnlyField(source='author.pk')
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Ad
         fields = ['pk', 'title', 'price', 'description', 'phone', 'author', 'author_first_name', 'author_last_name',
-                  'author_id']
+                  'author_id', 'comments']
 
 
 class AdListSerializer(serializers.ModelSerializer):
