@@ -77,7 +77,7 @@ class UserViewSetTestCase(APITestCase):
                                'last_name': 'User',
                                'phone': '+19430292',
                                'role': 'user',
-                               'id': 1,
+                               'id': self.user.pk,
                                'email': 'TestUser@test.com'}]})
 
     def test_get_user_list_by_user(self):
