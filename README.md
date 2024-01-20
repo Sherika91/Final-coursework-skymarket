@@ -1,4 +1,4 @@
-# Final Course WorkBackend-Part
+# Final Course Work Backend-Part
 ## Installation
 Before you start, make sure you have Python 3.7^ and pip installed on your system.
 ```
